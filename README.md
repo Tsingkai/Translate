@@ -6,8 +6,8 @@ eclipse 翻译插件
 
 #### 软件架构
 软件架构说明
-Eclipse 2020-06
-java version "1.8.0_311"
++ Eclipse 2020-06
++ Java version "1.8.0_311"
 
 #### 参考项目
 1. https://github.com/supernova-explosion/translate
