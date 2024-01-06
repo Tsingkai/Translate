@@ -12,6 +12,7 @@ public class TranslatePreferenceInitializer extends AbstractPreferenceInitialize
 		IPreferenceStore store = Activator.getDefault().getPreferenceStore();
 		store.setDefault(TranslatePreferenceConstants.SOURCE, "auto");
 		store.setDefault(TranslatePreferenceConstants.TARGET, "zh");
+		store.setDefault(TranslatePreferenceConstants.API_URL, "https://fanyi-api.baidu.com/api/trans/vip/translate");
 		store.setDefault(TranslatePreferenceConstants.APP_ID, "");
 		store.setDefault(TranslatePreferenceConstants.SECRET_KEY, "");
 	}
