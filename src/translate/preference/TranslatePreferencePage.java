@@ -20,12 +20,13 @@ public class TranslatePreferencePage extends FieldEditorPreferencePage implement
 	public static final String[][] sourceLanguage = new String[][] { { "自动检测", "auto" }, { "中文", "zh" }, { "英语", "en" },
 			{ "日语", "jp" }, { "韩语", "kor" }, { "法语", "fra" }, { "俄语", "ru" } };
 
-	public static final String[][] targetLanguage = new String[][] { { "英语", "en" }, { "中文", "zh" }, { "日语", "jp" },
+	public static final String[][] targetLanguage = new String[][] { { "中文", "zh" }, { "英语", "en" }, { "日语", "jp" },
 			{ "韩语", "kor" }, { "法语", "fra" }, { "俄语", "ru" } };
 
 	public TranslatePreferencePage() {
 		super(GRID);
 		setPreferenceStore(Activator.getDefault().getPreferenceStore()); // 设置以前设置过的内容
+		setDescription("build date: 2024-01-06");
 	}
 
 	@Override
@@ -38,18 +39,27 @@ public class TranslatePreferencePage extends FieldEditorPreferencePage implement
 				sourceLanguage, getFieldEditorParent());
 		ComboFieldEditor targetFieldEditor = new ComboFieldEditor(TranslatePreferenceConstants.TARGET, "目标语言：",
 				targetLanguage, getFieldEditorParent());
-
 		addField(sourceFieldEditor); // 源语言选择
 		addField(targetFieldEditor); // 目标语言选择
 
 		StringFieldEditor editorApiUrl = new StringFieldEditor(TranslatePreferenceConstants.API_URL, "API_URL",
 				getFieldEditorParent());
-		editorApiUrl.setEmptyStringAllowed(true);
+		editorApiUrl.setFocus();
+		editorApiUrl.setEmptyStringAllowed(false);
 		editorApiUrl.setStringValue("https://fanyi-api.baidu.com/api/trans/vip/translate");
 
-		addField(editorApiUrl); // api地址填写
-		addField(new StringFieldEditor(TranslatePreferenceConstants.APP_ID, "APP_ID：", getFieldEditorParent()));
-		addField(new StringFieldEditor(TranslatePreferenceConstants.SECRET_KEY, "SECRET_KEY：", getFieldEditorParent()));
+		StringFieldEditor editorAppID = new StringFieldEditor(TranslatePreferenceConstants.APP_ID, "APP_ID：",
+				getFieldEditorParent());
+		editorAppID.setEmptyStringAllowed(false);
+
+		StringFieldEditor editorSecretKey = new StringFieldEditor(TranslatePreferenceConstants.SECRET_KEY,
+				"SECRET_KEY：", getFieldEditorParent());
+		editorSecretKey.setEmptyStringAllowed(false);
+		editorSecretKey.getTextControl(getFieldEditorParent()).setEchoChar('*');
+
+		addField(editorApiUrl); // 添加API_URL文本框
+		addField(editorAppID); // 添加APP_ID文本框
+		addField(editorSecretKey); // 添加SECRET_KEY文本框
 
 	}
 

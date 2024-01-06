@@ -30,6 +30,8 @@ public class Translate {
 	private final String APP_ID;
 	/** 翻译api的Secret_Ke y */
 	private final String Secret_Key;
+	private final String fromLanguage;
+	private final String toLanguage;
 	/** 读取设置中的相关内容，如果出错则封装并返回 */
 	private TranslatePreferenceCode code = TranslatePreferenceCode.SUCCESS;
 
@@ -41,6 +43,8 @@ public class Translate {
 		String url = preferenceStore.getString(TranslatePreferenceConstants.API_URL);
 		String appID = preferenceStore.getString(TranslatePreferenceConstants.APP_ID);
 		String key = preferenceStore.getString(TranslatePreferenceConstants.SECRET_KEY);
+		String fromLanguage = preferenceStore.getString(TranslatePreferenceConstants.SOURCE);
+		String toLanguage = preferenceStore.getString(TranslatePreferenceConstants.TARGET);
 
 		if (url.isEmpty())
 			this.code = TranslatePreferenceCode.API_URL_EMPTY;
@@ -50,9 +54,12 @@ public class Translate {
 		if (key.isEmpty()) {
 			this.code = TranslatePreferenceCode.SECRET_KEY_EMPTY;
 		}
+
 		this.API_URL = url;
 		this.APP_ID = appID;
 		this.Secret_Key = key;
+		this.fromLanguage = fromLanguage;
+		this.toLanguage = toLanguage;
 	}
 
 	/**
@@ -64,7 +71,7 @@ public class Translate {
 	 * @return 翻译结果数组
 	 * @throws Exception
 	 */
-	public TranslateResult translate(String translateString, String fromLanguage, String toLanguage) {
+	public TranslateResult translate(String translateString) {
 		if (translateString.trim().length() != 0) {
 			translateString = translateString.trim().replace("//", "").replace("// ", "").replace("/**", "")
 					.replace(" * ", "").replace("\t", "");

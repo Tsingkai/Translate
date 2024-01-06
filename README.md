@@ -4,6 +4,10 @@
 eclipse 翻译插件
 百度翻译
 
+> + 该插件是参考GitHub项目：https://github.com/supernova-explosion/translate
+> + 可能由于百度翻译API更新导致原项目无法使用，故进行开发本项目。
+> + 本项目照抄了Preference部分，重写了翻译部分，重构了handler结构，细化了错误描述等。
+
 #### 软件架构
 软件架构说明
 + Eclipse 2020-06
@@ -12,17 +16,14 @@ eclipse 翻译插件
 #### 参考项目
 1. https://github.com/supernova-explosion/translate
 
-#### 安装教程
-
-1.  xxxx
-2.  xxxx
-3.  xxxx
-
 #### 使用说明
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+1.  在[百度翻译API](https://api.fanyi.baidu.com/)申请 【通用文本翻译】，标准版的不收费哦，实际使用依据个人实际情况是否使用高级版
+> 2022年8月1日起，通用翻译API标准版免费调用量调整为5万字符/月，高级版免费调用量调整为100万字符/月
+2.  在[通用翻译API接入文档](https://api.fanyi.baidu.com/doc/21)中，【接入方式】一节中，将[通用翻译API HTTPS 地址](https://fanyi-api.baidu.com/api/trans/vip/translate)粘贴进设置页面。
+> 设置项位于 eclipse内： 【Window】-> 【Preferences】->【Translate】中
+3.	在[开发者信息](https://api.fanyi.baidu.com/manage/developer)中，找到【APP ID】、【密钥】填入设置页面的【APP_ID】、【SECRET_KEY】中，然后设置好源语言和目标语言
+4.	设置完成后，eclipse代码编辑器中，【选中单词】->【右键】->【Translate】
 
 #### 参与贡献
 
@@ -30,13 +31,3 @@ eclipse 翻译插件
 2.  新建 Feat_xxx 分支
 3.  提交代码
 4.  新建 Pull Request
-
-
-#### 特技
-
-1.  使用 Readme\_XXX.md 来支持不同的语言，例如 Readme\_en.md, Readme\_zh.md
-2.  Gitee 官方博客 [blog.gitee.com](https://blog.gitee.com)
-3.  你可以 [https://gitee.com/explore](https://gitee.com/explore) 这个地址来了解 Gitee 上的优秀开源项目
-4.  [GVP](https://gitee.com/gvp) 全称是 Gitee 最有价值开源项目，是综合评定出的优秀开源项目
-5.  Gitee 官方提供的使用手册 [https://gitee.com/help](https://gitee.com/help)
-6.  Gitee 封面人物是一档用来展示 Gitee 会员风采的栏目 [https://gitee.com/gitee-stars/](https://gitee.com/gitee-stars/)

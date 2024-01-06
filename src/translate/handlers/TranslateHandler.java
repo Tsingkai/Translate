@@ -46,7 +46,7 @@ public class TranslateHandler extends AbstractHandler {
 		TextSelection textSelection = (TextSelection) selection; // 读取文本
 		String selectedText = textSelection.getText();
 
-		TranslateResult result = translate.translate(selectedText, "auto", "zh"); // 翻译，启动！
+		TranslateResult result = translate.translate(selectedText); // 翻译，启动！
 		if (result.getError_code() == TranslateResultCode.SUCCESS) { // 成功，正常翻译
 			ArrayList<TranslateMap> translateMaps = result.getTrans_result();
 			StringBuilder paragraph = new StringBuilder(); // 组装成段落
@@ -61,7 +61,7 @@ public class TranslateHandler extends AbstractHandler {
 			// 错误处理
 			int errorCode = result.getError_code().getCode();
 			String errorMessage = result.getError_code().getMessage();
-			MessageDialog.openInformation(window.getShell(), "翻译错误",
+			MessageDialog.openError(window.getShell(), "翻译错误",
 					String.format("错误码：%d\n错误详情：%s", errorCode, errorMessage));
 		}
 
