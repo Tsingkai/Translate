@@ -47,4 +47,31 @@ public class TextUtil {
 		}
 		return map;
 	}
+
+	public static String formatText2Paragraph(String text) { // 1. 移除注释字符
+		text = text.replace("//", "").replace("/*", "").replace("*/", "").replace("*", " ");
+		// 2. 按照换行符分割
+		String[] array = text.split("\r\n");
+		ArrayList<String> list = new ArrayList<String>();
+		boolean lastIsEmpty = false;
+		for (int i = 0; i < array.length; i++) {
+			String item = array[i];
+			// 3. 去除连续空格和单个制表符
+			item = item.replaceAll("\\s{2,}", "").replace("\t", "");
+//			4. 连续空行保留一个
+			if (item.length() != 0 && lastIsEmpty) {
+				list.add("\r\n");
+			}
+			if (item.length() != 0) {
+				list.add(item + " ");
+			}
+			lastIsEmpty = item.length() == 0;
+		}
+		StringBuilder sb = new StringBuilder();
+		list.stream().forEach((e) -> {
+			sb.append(e);
+		});
+		// 5. 对@保留空行
+		return sb.toString().trim().replace("@", "\r\n@");
+	}
 }

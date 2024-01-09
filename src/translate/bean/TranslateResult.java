@@ -19,6 +19,15 @@ public class TranslateResult {
 	/** 错误码，仅当错误的时候出现 */
 	private TranslateResultCode error_code = TranslateResultCode.SUCCESS;
 
+	public TranslateResult() {
+		super();
+	}
+
+	public TranslateResult(TranslateResultCode error_code) {
+		super();
+		this.error_code = error_code;
+	}
+
 	public String getFrom() {
 		return from;
 	}
@@ -51,4 +60,7 @@ public class TranslateResult {
 		this.error_code = error_code;
 	}
 
+	public boolean isDefault() {
+		return this.from == "" && this.to == "" && this.trans_result.isEmpty();
+	}
 }

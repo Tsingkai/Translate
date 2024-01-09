@@ -8,8 +8,10 @@ import java.util.Random;
 import org.eclipse.jface.preference.IPreferenceStore;
 
 import translate.Activator;
+import translate.bean.TranslateError;
 import translate.bean.TranslatePreferenceCode;
 import translate.bean.TranslateResult;
+import translate.bean.TranslateResultCode;
 import translate.preference.TranslatePreferenceConstants;
 import translate.utils.GsonUtil;
 import translate.utils.HttpUtil;
@@ -73,18 +75,27 @@ public class Translate {
 	 */
 	public TranslateResult translate(String translateString) {
 		if (translateString.trim().length() != 0) {
-			translateString = translateString.trim().replace("//", "").replace("// ", "").replace("/**", "")
-					.replace(" * ", "").replace("\t", "");
+			System.out.println(translateString);
+			translateString = TextUtil.formatText2Paragraph(translateString);
+			System.out.println(translateString);
 			String url = generateRequestUrl(translateString, fromLanguage, toLanguage);
 			String response = HttpUtil.get(url);
 			String stringJson = TextUtil.unicode2UTF8(response);
 			TranslateResult result = GsonUtil.json2Bean(stringJson, TranslateResult.class);
+			if (result.isDefault()) {
+				TranslateError error = GsonUtil.json2Bean(stringJson, TranslateError.class);
+				int errorCode = Integer.parseInt(error.getError_code());
+
+				TranslateResultCode code = TranslateResultCode.getTranslateResultCode(errorCode);
+				result = new TranslateResult(code);
+			}
 			return result;
 		}
 		return null;
 	}
 
 	/**
+	 * 按照百度要求生成翻译请求url
 	 * 
 	 * @param translateString
 	 * @param fromLanguage

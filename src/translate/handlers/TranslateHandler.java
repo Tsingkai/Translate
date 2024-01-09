@@ -9,9 +9,13 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.PopupDialog;
 import org.eclipse.jface.text.TextSelection;
 import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.handlers.HandlerUtil;
 
@@ -51,9 +55,9 @@ public class TranslateHandler extends AbstractHandler {
 			ArrayList<TranslateMap> translateMaps = result.getTrans_result();
 			StringBuilder paragraph = new StringBuilder(); // 组装成段落
 			for (TranslateMap translateMap : translateMaps) {
-				if (paragraph.length() > 0)
-					paragraph.append("\n");
-				paragraph.append(translateMap.getDst());
+				String destination = translateMap.getDst();
+				destination = destination.replace("。", "。\r\n");
+				paragraph.append(destination);
 			}
 			PopupDialog dialog = createTranslatePopupDialog(window, event, paragraph.toString()); // 创建弹窗并打开
 			dialog.open();
@@ -80,13 +84,29 @@ public class TranslateHandler extends AbstractHandler {
 			String translateResult) {
 		@SuppressWarnings("deprecation")
 		PopupDialog dialog = new PopupDialog(window.getShell(), PopupDialog.HOVER_SHELLSTYLE, true, false, false, false,
-				"Translate", translateResult) {
+				"Translate", null) {
+
+			@Override
+			protected Control createDialogArea(Composite parent) {
+				Composite composite = (Composite) super.createDialogArea(parent);
+
+				// 在对话框中添加一些控件
+				Text text = new Text(composite, SWT.MULTI | SWT.WRAP | SWT.READ_ONLY);
+				text.setText(translateResult);
+
+				// 设置布局数据，以便填充整个对话框区域
+				text.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+
+				return composite;
+			}
+
 			@Override
 			protected Point getInitialLocation(Point initialSize) {
 				Control control = HandlerUtil.getActiveEditor(event).getAdapter(Control.class);
+
 				StyledText text = (StyledText) control;
 				Point point = text.toDisplay(text.getLocationAtOffset(text.getCaretOffset()));
-				return new Point(point.x + 2, point.y);
+				return new Point(point.x + 600, point.y);
 			}
 		};
 		return dialog;
